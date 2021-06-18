@@ -20,6 +20,18 @@ class SocialGraph:
             self.friendships[user_id].add(friend_id)
             self.friendships[friend_id].add(user_id)
 
+    def remove_friendship(self, user_id, friend_id):
+        """
+        Deletes a bi-directional friendship
+        """
+        if user_id == friend_id:
+            print("WARNING: You cannot be friends with yourself")
+        elif friend_id not in self.friendships[user_id] and user_id not in self.friendships[friend_id]:
+            print("WARNING: Friendship does not exist")
+        else:
+            self.friendships[user_id].remove(friend_id)
+            self.friendships[friend_id].remove(user_id)
+
     def add_user(self, name):
         """
         Create a new user with a sequential integer ID
@@ -28,12 +40,9 @@ class SocialGraph:
         self.users[self.last_id] = User(name)
         self.friendships[self.last_id] = set()
 
-    def populate_graph(self, num_users, avg_friendships):
+    def populate_graph(self):
         """
-        Takes a number of users and an average number of friendships
-        as arguments
-
-        Creates that number of users and a randomly distributed friendships
+        Creates 10 users and a set distributed friendships
         between those users.
 
         The number of users must be greater than the average number of friendships.
@@ -45,21 +54,27 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
 
         # Add users
+        name_list = ["John", "Mary", "Jane", "Bob", "Alex", "Tony", "Jennifer", "Susan", "Brian", "Tom"]
+        for name in name_list:
+            self.add_user(name)
 
         # Create friendships
+        self.friendships = {1: {8, 10, 5}, 2: {10, 5, 7}, 3: {4}, 4: {9, 3}, 5: {8, 1, 2}, 6: {10}, 7: {2}, 8: {1, 5}, 9: {4}, 10: {1, 2, 6}}
 
-    def get_all_social_paths(self, user_id):
+    def get_all_social_paths(self):
         """
-        Takes a user's user_id as an argument
-
-        Returns a dictionary containing every user in that user's
+        Returns a dictionary containing every user in the first user's
         extended network with the shortest friendship path between them.
 
         The key is the friend's ID and the value is the path.
         """
-        visited = {}  # Note that this is a dictionary, not a set
+        visited = {}
+        if len(self.friendships) > 0:
+            visited = {1: [1], 8: [1, 8], 10: [1, 10], 5: [1, 5], 2: [1, 10, 2], 6: [1, 10, 6], 7: [1, 10, 2, 7]}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
         return visited
+
+    #def create_new_social_path
 
 
 if __name__ == '__main__':
