@@ -36,6 +36,14 @@ class SocialGraph:
         """
         Create a new user with a sequential integer ID
         """
+        for user in self.users.values():
+            if name == user.name:
+                # username taken
+                print("username already exists")
+
+                return
+        
+        # username available
         self.last_id += 1  # automatically increment the ID to assign the new user
         self.users[self.last_id] = User(name)
         self.friendships[self.last_id] = set()
@@ -74,8 +82,29 @@ class SocialGraph:
         # !!!! IMPLEMENT ME
         return visited
 
-    #def create_new_social_path
+    def change_user_name(self, current_name, new_name):
+        """
+        Changes the name of a user given the user's current name.
+        """
+        for id, user in self.users.items():
+            if user.name == current_name:
+                self.users[id].name = new_name
+                break
 
+        # could not find user
+        print("error: user does not exist")
+
+    def get_friends(self, user_id):
+        """
+        Changes the name of a user given the user's current name.
+        """
+        req_friend_list = {}
+        friendship_ids = self.friendships[user_id]
+
+        for id in friendship_ids:
+            req_friend_list[id] = self.users[id].name
+
+        return req_friend_list
 
 if __name__ == '__main__':
     sg = SocialGraph()
