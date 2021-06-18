@@ -17,3 +17,5 @@ def test_get_friends():
     sg = SocialGraph()
     sg.populate_graph()
     assert sg.get_friends(1) == {8: "Susan", 10: "Tom", 5: "Alex"}
+
+#
