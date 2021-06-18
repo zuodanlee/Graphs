@@ -89,7 +89,7 @@ class SocialGraph:
         for id, user in self.users.items():
             if user.name == current_name:
                 self.users[id].name = new_name
-                break
+                return
 
         # could not find user
         print("error: user does not exist")
@@ -108,8 +108,10 @@ class SocialGraph:
 
 if __name__ == '__main__':
     sg = SocialGraph()
-    sg.populate_graph(10, 2)
+    sg.populate_graph()
     print(sg.friendships)
-    connections = sg.get_all_social_paths(1)
+    print(sg.get_friends(1))
+    sg.change_user_name("Alex", "Builder")
+    connections = sg.get_all_social_paths()
     print(connections)
 
